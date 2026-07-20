@@ -35,7 +35,7 @@ void InputAdd();
 void main()
 {
 	//_CrtSetBreakAlloc(71); //메모리 누수시 번호를 넣으면 할당하는 위치에 브레이크 포인트를 건다.
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //메모리 누수 검사 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //메모리 누수 검사 
 
 	SNode* pBegin = NULL;
 	SNode* pEnd = NULL;
@@ -43,11 +43,23 @@ void main()
 	//노드 추가 테스트
 	pEnd = CreateNode(pEnd, 10);
 	pBegin = pEnd; //마지막 노드를 알아야 검색이 가능하므로 저장해둔다.
+	SNode* pTempEnd = NULL;
 
 	pEnd = CreateNode(pEnd, 20);
+	pBegin->pNext = pEnd;
+	pTempEnd = pEnd;
+
 	pEnd = CreateNode(pEnd, 30);
+	pTempEnd->pNext = pEnd;
+	pTempEnd = pEnd;
+
 	pEnd = CreateNode(pEnd, 40);
+	pTempEnd->pNext = pEnd;
+	pTempEnd = pEnd;
+
 	pEnd = CreateNode(pEnd, 50);
+	pTempEnd->pNext = pEnd;
+	pTempEnd = pEnd;
 
 	PrintLinkedList(pBegin);
 
@@ -74,6 +86,7 @@ SNode* CreateNode(SNode* pNode, int data)
 
 	pTemp = new SNode();
 	pTemp->nData = data;
+	pTemp->pNext = NULL;
 
 	return  pTemp;
 }
@@ -101,6 +114,12 @@ SNode* InsertNodeData(SNode* pStart, int data, int insert)
 	
 	pNode = FindNodeData(pStart, data);
 
+	pInsert = new SNode();
+	pInsert->nData = insert;
+	SNode* pTemp = pNode->pNext;
+	pNode->pNext = pInsert;
+	pInsert->pNext = pTemp;
+
 	return pNode;
 }
 
@@ -109,7 +128,19 @@ void DeleteNodeData(SNode* pStart, int del)
 	SNode* pPre = NULL;
 	SNode* pNode = pStart;
 
+	while (pNode)
+	{
+		if (pNode->pNext->nData == del)
+		{
+			pPre = pNode;
+			pNode = pNode->pNext;
+			pPre->pNext = pNode->pNext;
+			delete pNode;
+			return;
+		}
 
+		pNode = pNode->pNext;
+	}
 }
 
 void PrintLinkedList(SNode* pStart)
@@ -131,6 +162,13 @@ void DeleteLinkedList(SNode* pStart)
 {
 	SNode* pNode = pStart;
 	SNode* pDel = NULL;
+
+	while (pNode)
+	{
+		pDel = pNode;
+		pNode = pNode->pNext;
+		delete pDel;
+	}
 }
 
 void InputAdd()
