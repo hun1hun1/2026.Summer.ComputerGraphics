@@ -5,6 +5,7 @@
 마지막수정날짜: 2019.04.12
 버전: 1.10
 ###################################*/
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h> //메모리 동적할당 헤더
@@ -80,6 +81,15 @@ SNode* CreateNode(SNode* pNode, int data)
 SNode* FindNodeData(SNode* pStart, int data)
 {
 	SNode* pNode = pStart;
+	while (pNode)
+	{
+		if (pNode->nData == data)
+		{
+			return pNode;
+		}
+
+		pNode = pNode->pNext;
+	}
 
 	return pNode;
 }
