@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 
+//선언: 있는것을 알리는 것
+//정의: 실제로 구현하는 것
+//초기화: 선언과 동시에 값을 넣는 것
+//함수: 특정 작업을 수행하는 코드 블럭
+//식별자: 무엇인가 구별하기위해 정해진 것, 변수나 함수의 이름.
+
 void OperatorTestMain()
 {
 	int nDataA = 10;
@@ -115,6 +121,7 @@ void ArrayMain()
 
 int main()
 {
+	//함수의호출: 함수를 부른다. (실제로는 간다는 개념에 가까움)
 	OperatorTestMain();
 	printf("\n");
 	PointerTestMain();
