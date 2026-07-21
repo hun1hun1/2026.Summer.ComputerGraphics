@@ -46,20 +46,9 @@ void main()
 	SNode* pTempEnd = NULL;
 
 	pEnd = CreateNode(pEnd, 20);
-	pBegin->pNext = pEnd;
-	pTempEnd = pEnd;
-
 	pEnd = CreateNode(pEnd, 30);
-	pTempEnd->pNext = pEnd;
-	pTempEnd = pEnd;
-
 	pEnd = CreateNode(pEnd, 40);
-	pTempEnd->pNext = pEnd;
-	pTempEnd = pEnd;
-
 	pEnd = CreateNode(pEnd, 50);
-	pTempEnd->pNext = pEnd;
-	pTempEnd = pEnd;
 
 	PrintLinkedList(pBegin);
 
@@ -87,6 +76,7 @@ SNode* CreateNode(SNode* pNode, int data)
 	pTemp = new SNode();
 	pTemp->nData = data;
 	pTemp->pNext = NULL;
+	if (pNode != NULL) pNode->pNext = pTemp;
 
 	return  pTemp;
 }
