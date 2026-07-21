@@ -43,7 +43,6 @@ void main()
 	//노드 추가 테스트
 	pEnd = CreateNode(pEnd, 10);
 	pBegin = pEnd; //마지막 노드를 알아야 검색이 가능하므로 저장해둔다.
-	SNode* pTempEnd = NULL;
 
 	pEnd = CreateNode(pEnd, 20);
 	pEnd = CreateNode(pEnd, 30);
@@ -105,9 +104,8 @@ SNode* InsertNodeData(SNode* pStart, int data, int insert)
 	pNode = FindNodeData(pStart, data);
 
 	pInsert = CreateNode(pInsert, insert);
-	SNode* pTemp = pNode->pNext;
+	pInsert->pNext = pNode->pNext;
 	pNode->pNext = pInsert;
-	pInsert->pNext = pTemp;
 
 	return pNode;
 }
