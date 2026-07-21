@@ -114,8 +114,7 @@ SNode* InsertNodeData(SNode* pStart, int data, int insert)
 	
 	pNode = FindNodeData(pStart, data);
 
-	pInsert = new SNode();
-	pInsert->nData = insert;
+	pInsert = CreateNode(pInsert, insert);
 	SNode* pTemp = pNode->pNext;
 	pNode->pNext = pInsert;
 	pInsert->pNext = pTemp;
