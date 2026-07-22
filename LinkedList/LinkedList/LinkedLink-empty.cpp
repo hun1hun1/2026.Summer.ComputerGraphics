@@ -106,7 +106,7 @@ SNode* InsertNodeData(SNode* pStart, int data, int insert)
 	pInsert = CreateNode(pInsert, insert);
 	pInsert->pNext = pNode->pNext;
 	pNode->pNext = pInsert;
-
+	while (pNode->pNext) pNode = pNode->pNext;
 	return pNode;
 }
 
@@ -115,7 +115,7 @@ void DeleteNodeData(SNode* pStart, int del)
 	SNode* pPre = NULL;
 	SNode* pNode = pStart;
 
-	while (pNode)
+	while (pNode->pNext)
 	{
 		if (pNode->pNext->nData == del)
 		{
