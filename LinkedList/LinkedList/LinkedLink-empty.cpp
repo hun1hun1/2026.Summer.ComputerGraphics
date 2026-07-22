@@ -158,6 +158,21 @@ void DeleteLinkedList(SNode* pStart)
 	}
 }
 
+void ReverseLinkedList(SNode* pStart)
+{
+	SNode* pNode = pStart;
+	SNode* pPre = NULL;
+	SNode* pAfter = pNode->pNext;
+
+	while (pNode)
+	{
+		pAfter = pNode->pNext;
+		pNode->pNext = pPre;
+		pPre = pNode;
+		pNode = pAfter;
+	}
+}
+
 void InputAdd()
 {
 	SNode* pStart = NULL;
