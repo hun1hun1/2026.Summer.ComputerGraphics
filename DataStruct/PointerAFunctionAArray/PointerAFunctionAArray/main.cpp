@@ -110,13 +110,18 @@ void ArrayMain()
 		printf("[%p/%d]%d, ", pA, i, *pA);
 		pA++;
 	}
+	printf("\n");
 
 	int arrACopy[nSize];
-	for (int i = 0; i < nSize; ++i)
+	/*for (int i = 0; i < nSize; ++i)
 	{
 		arrACopy[i] = arrA[i];
+	}*/
+	memcpy(arrACopy, arrA, sizeof(int) * nSize);
+	for (int i = 0; i < nSize; ++i)
+	{
+		printf("[%p/%d]%d, ", &arrACopy[i], i, arrACopy[i]);
 	}
-	memcpy(arrACopy, arrA, nSize);
 }
 
 int main()
