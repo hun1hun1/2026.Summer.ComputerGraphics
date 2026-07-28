@@ -8,11 +8,32 @@ void InsertSort()
 	//배열을 정렬되도록 로직을 짜기
 	//
 	//-------------------------------
+	for (int i = 0; i < 8; ++i)
+	{
+		int min = arrData[i];
+		int minIdx = i;
+		for (int j = i + 1; j < 9; ++j)
+		{
+			if (arrData[j] < min)
+			{
+				min = arrData[j];
+				minIdx = j;
+			}
+		}
+
+		if (minIdx == i) continue;
+		else
+		{
+			int nTemp = arrData[i];
+			arrData[i] = arrData[minIdx];
+			arrData[minIdx] = nTemp;
+		}
+	}
 
 	//다음출력에서 1~9까지 순서대로 정렬되도록 만들기
 	printf("Data:");
 	for (int i = 0; i < 9; i++)
-		printf("%d,");
+		printf("%d,", arrData[i]);
 	printf("\n");
 }
 
