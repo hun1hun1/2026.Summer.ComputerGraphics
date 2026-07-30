@@ -146,10 +146,10 @@ void HashMapMain()
 	cout << mapDic["try"] << endl;
 	cout << mapDic["note"] << endl;
 }
-void main()
+int main()
 {
 	VectorMain();
-	ListMain();
+	//ListMain();
 	//DequeMain();
 	//StackMain();
 	//QueueMain();
