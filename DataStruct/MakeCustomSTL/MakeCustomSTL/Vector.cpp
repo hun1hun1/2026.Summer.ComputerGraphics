@@ -18,6 +18,11 @@ class Vector
 			for (int i = 0; i < n; ++i) mData[i] = T();
 		};
 
+		Vector(int n, T init) : mData(new T[n]), mCapacity(n), mSize(n)
+		{
+			for (int i = 0; i < n; ++i) mData[i] = init;
+		};
+
 		void reserve(int newCapacity)
 		{
 			if (newCapacity <= mCapacity) return;
@@ -136,6 +141,9 @@ class Vector
 			{
 				newData[mSize - i - 1] = mData[i];
 			}
+
+			delete[] mData;
+			mData = newData;
 		}
 
 		int size()
