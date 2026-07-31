@@ -35,7 +35,19 @@ void VectorMain()
 		cout << "[" << i << "]" << container[i] << ",";
 	cout << endl;
 	//1.추가 2.삽입 3.삭제 4.모두삭제
+	for (int i = 1; i < container.size(); ++i) container[i] = 10 + i * 10;
+	container.push_back(40);
 	vector<int>::iterator it;
+
+	for (it = container.begin(); it != container.end(); it++)
+	{
+		if (*it == 40)
+		{
+			container.insert(it, 50);
+			break;
+		}
+	}
+
 	cout << "PrintPtr:";
 	for (it = container.begin(); it != container.end(); it++)
 		cout << "[" << &*it << "]" << *it << ",";
