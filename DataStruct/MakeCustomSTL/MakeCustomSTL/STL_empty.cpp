@@ -71,14 +71,31 @@ void ListMain()
 	int i = 0;
 	for (it = container.begin(); it != container.end(); it++)
 		cout << "[" <<  i++ << "]" << *it << ",";
-	cout << endl;
-	container.resize(3); //배열의 크기를 지정한다.
+	cout << endl; //배열의 크기를 지정한다.
 	i = 0;
+	container.resize(3);
 	cout << "Print:";
 	for (it = container.begin(); it != container.end(); it++)
 		cout << "[" << i++ << "]" << *it << ",";
 	cout << endl;
 	//1.추가 2.삽입 3.삭제 4.모두삭제
+	i = 1;
+	for (it = next(container.begin()); it != container.end(); it++)
+	{
+		*it = i * 10 + 10;
+		i++;
+	}
+
+	container.push_back(40);
+	for (it = container.begin(); it != container.end(); it++)
+	{
+		if (*it == 40)
+		{
+			container.insert(it, 50);
+			break;
+		}
+	}
+
 	cout << "PrintPtr:";
 	for (it = container.begin(); it != container.end(); it++)
 		cout << "[" << &*it << "]" << *it << ",";
@@ -99,14 +116,46 @@ void DequeMain()
 //문자열뒤집기 -> 문자배열 -> apple -> elppa
 void StackMain()
 {
+	string str = "apple";
+	cout << "Print:";
+	for (int i = 0; i < str.length(); ++i)
+	{
+		cout << str[i];
+	}
 
+	stack<char> st;
+	for (char c : str)
+	{
+		st.push(c);
+	}
+
+	cout << " -> ";
+
+	for (int i = 0; i < str.length(); ++i)
+	{
+		cout << st.top();
+		st.pop();
+	}
+	cout << endl;
 }
 //큐: 뒤에서 추가하고 앞에서 꺼냄.
 //메세지큐: 이벤트가 발생한 순서대로 저장하는 공간.
 //입력된 순서대로 명령어 처리하기
 void QueueMain()
 {
+	queue<string> msgq;
 
+	msgq.push("Jump");
+	msgq.push("Run");
+	msgq.push("Stop");
+
+	cout << "Print:";
+	while (!msgq.empty())
+	{
+		cout << msgq.front() << " -> ";
+		msgq.pop();
+	}
+	cout << endl;
 }
 //우선순위큐: 우선순위가 높은 원소가 먼저나감(힙)
 //무작위로 데이터를 넣었을때 어떤 순서대로 데이터가 나오는가? 큰값부터 나온다.
@@ -161,10 +210,10 @@ void HashMapMain()
 int main()
 {
 	VectorMain();
-	//ListMain();
+	ListMain();
 	//DequeMain();
-	//StackMain();
-	//QueueMain();
+	StackMain();
+	QueueMain();
 	//PriorytyQueueMain();
 	//MapMain();
 	//SetMain();
