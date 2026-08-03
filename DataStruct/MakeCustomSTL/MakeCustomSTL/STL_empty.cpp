@@ -109,7 +109,40 @@ void ListMain()
 //데크: 앞뒤로 자료를 추가/삭제가능, 랜덤접근가능.
 void DequeMain()
 {
+	deque<int> container(1);//컨테이너생성시 크기를 지정가능하다.
+	container[0] = 10;
+	cout << "Print:";
+	for (int i = 0; i < container.size(); i++)
+		cout << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+	container.resize(3); //배열의 크기를 지정한다.
+	cout << "Print:";
+	for (int i = 0; i < container.size(); i++)
+		cout << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+	//1.추가 2.삽입 3.삭제 4.모두삭제
+	for (int i = 1; i < container.size(); ++i) container[i] = 10 + i * 10;
+	container.push_back(40);
+	deque<int>::iterator it;
 
+	for (it = container.begin(); it != container.end(); it++)
+	{
+		if (*it == 40)
+		{
+			container.insert(it, 50);
+			break;
+		}
+	}
+
+	cout << "PrintPtr:";
+	for (it = container.begin(); it != container.end(); it++)
+		cout << "[" << &*it << "]" << *it << ",";
+	cout << endl;
+	container.clear(); //모두삭제
+	cout << "Clear:";
+	for (it = container.begin(); it != container.end(); it++)
+		cout << "[" << &*it << "]" << *it << ",";
+	cout << endl;
 }
 //스택: 뒤에서 추가되고 뒤에서 꺼냄.
 //재귀함수에서 이전 함수를 호출할때마다 스택에 쌓임.
@@ -161,7 +194,18 @@ void QueueMain()
 //무작위로 데이터를 넣었을때 어떤 순서대로 데이터가 나오는가? 큰값부터 나온다.
 void PriorytyQueueMain()
 {
-
+	priority_queue<int> container;//컨테이너생성시 크기를 지정가능하다.
+	container.push(10);
+	//1.추가 2.삽입 3.삭제 4.모두삭제
+	for (int i = 1; i < 3; ++i) container.push(10 * i + 10);
+	container.push(40);
+	cout << "Print";
+	while (!container.empty())
+	{
+		cout << container.top() << ",";
+		container.pop();
+	}
+	cout << endl;
 }
 //맵: 사전식으로 데이터를 찾을수있다.
 //해당영어단어를 넣으면 한국어 결과가 나온다.
@@ -211,10 +255,10 @@ int main()
 {
 	VectorMain();
 	ListMain();
-	//DequeMain();
+	DequeMain();
 	StackMain();
 	QueueMain();
-	//PriorytyQueueMain();
+	PriorytyQueueMain();
 	//MapMain();
 	//SetMain();
 }
