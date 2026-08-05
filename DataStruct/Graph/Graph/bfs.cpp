@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <queue>
 
 using namespace std;
 
-int visited[100] = { 0 };
+bool visited[100] = { 0 };
 
-void bfs(map<char, vector<char>> graph, char start)
+void bfs(unordered_map<char, vector<char>> graph, char start)
 {
 	queue<char> bfsQ;
 	visited[start - 'A'] = 1;
@@ -33,7 +33,7 @@ void bfs(map<char, vector<char>> graph, char start)
 
 int main()
 {
-	map<char, vector<char>> graphList;
+	unordered_map<char, vector<char>> graphList;
 	graphList['A'].push_back('B');
 	graphList['B'].push_back('D');
 	graphList['B'].push_back('F');

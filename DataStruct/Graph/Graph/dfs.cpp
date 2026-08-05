@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <stack>
 
 using namespace std;
 
-int visited[100] = { 0 };
+bool visited[100] = { 0 };
 
-void dfs_recursive(map<char, vector<char>> graph, char start)
+void dfs_recursive(unordered_map<char, vector<char>> graph, char start)
 {
 	visited[start - 'A'] = 1;
 
@@ -22,7 +22,7 @@ void dfs_recursive(map<char, vector<char>> graph, char start)
 	cout << start << " -> ";
 }
 
-void dfs_iterative(map<char, vector<char>> graph, char start)
+void dfs_iterative(unordered_map<char, vector<char>> graph, char start)
 {
 	visited[start - 'A'] = 1;
 	stack<char> dfsSt;
@@ -47,7 +47,7 @@ void dfs_iterative(map<char, vector<char>> graph, char start)
 
 int main()
 {
-	map<char, vector<char>> graphList;
+	unordered_map<char, vector<char>> graphList;
 	graphList['A'].push_back('B');
 	graphList['B'].push_back('D');
 	graphList['B'].push_back('F');
@@ -63,8 +63,7 @@ int main()
 	graphList['G'].push_back('H');
 
 	dfs_recursive(graphList, 'A');
-	cout << endl;
-	dfs_iterative(graphList, 'A');
+	//dfs_iterative(graphList, 'A');
 
 	return 0;
 }
