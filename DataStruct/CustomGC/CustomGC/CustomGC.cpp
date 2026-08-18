@@ -60,6 +60,7 @@ int main()
 
 	auto player = manager.Create<Player>();
 	auto enemy = manager.Create<Enemy>();
+	auto test = new Player();
 
 	player.reset();
 
