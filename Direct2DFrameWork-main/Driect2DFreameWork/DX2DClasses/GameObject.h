@@ -72,10 +72,11 @@ namespace DX2DClasses
 		bool GetActive() { return m_isActive; };
 	public:
 		CGameObject();
+		virtual ~CGameObject();
 
 		void Initialize(CImage* img = NULL, bool anim = false, bool acive = true);
-		void Release();
-		void Update();
-		void Draw();
+		virtual void Release();
+		virtual void Update();
+		virtual void Draw();
 	};
 }

@@ -81,6 +81,12 @@
     <ClCompile Include="MemoryLeakTestScene.cpp">
       <Filter>소스 파일\UserDefine</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\UserDefine</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일\UserDefine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX2DClasses\SingletonRenderTarget.h">
@@ -162,6 +168,12 @@
       <Filter>소스 파일\DX2DClasses</Filter>
     </ClInclude>
     <ClInclude Include="MemoryLeakTestScene.h">
+      <Filter>소스 파일\UserDefine</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\UserDefine</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>소스 파일\UserDefine</Filter>
     </ClInclude>
   </ItemGroup>

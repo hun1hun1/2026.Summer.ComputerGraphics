@@ -5,6 +5,9 @@
 
 using namespace DX2DClasses;
 
+CGameObject::~CGameObject()
+{
+}
 
 CTransform::CTransform()
 {

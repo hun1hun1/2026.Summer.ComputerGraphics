@@ -1,191 +1,118 @@
 #include "GameScene.h"
+#include "Bullet.h"
+#include "Player.h"
+
 #include "DX2DClasses/Driect2DFramework.h"
-#include "DX2DClasses/Image.h"
-#include "DX2DClasses/GameObject.h"
-#include "DX2DClasses/InputManager.h"
-#include "DX2DClasses/DebugHelper.h"
-#include "DX2DClasses/CollisionCheck.h"
-#include "DX2DClasses/ColorBrushPalettet.h"
-#include "DX2DClasses/SingletonRenderTarget.h"
-#include "DX2DClasses/Colliders.h"
-#include "DX2DClasses/Rigidbody.h"
-#include <algorithm>
+#include "DX2DClasses/Vector2.h"
 
 using namespace DX2DClasses;
 
 CGameScene::CGameScene()
+	: m_hWnd(nullptr)
+	, m_pDX2DFramework(nullptr)
+	, m_pPlayer(nullptr)
 {
-
 }
 
 CGameScene::~CGameScene()
 {
-
 }
 
-void CGameScene::_InitImagesList(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
+void CGameScene::Initialize(
+	HWND hWnd,
+	CDriect2DFramwork* pDX2DFramework
+)
 {
-	m_listImages.resize(E_SUNNYLAND_IMAGE::MAX);
+	m_hWnd = hWnd;
+	m_pDX2DFramework = pDX2DFramework;
 
-	CImage* pPlayerImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 6);
-	pPlayerImage->ManualLoadImage(hWnd, L"Images\\Player\\player%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::Player] = pPlayerImage;
+	m_pPlayer = new CPlayer();
 
-	CImage* pOpossumImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 6);
-	pOpossumImage->ManualLoadImage(hWnd, L"Images\\Enemy\\opossum%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::Opossum] = pOpossumImage;
-
-	CImage* pEagleImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 4);
-	pEagleImage->ManualLoadImage(hWnd, L"Images\\Enemy\\eagle%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::Eagle] = pEagleImage;
-
-	CImage* pCherryImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 7);
-	pCherryImage->ManualLoadImage(hWnd, L"Images\\Item\\cherry%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::Cherry] = pCherryImage;
-
-	CImage* pGemImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 5);
-	pGemImage->ManualLoadImage(hWnd, L"Images\\Item\\gem%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::Gem] = pGemImage;
-
-	CImage* pItemEffectImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 4);
-	pItemEffectImage->ManualLoadImage(hWnd, L"Images\\Effect\\itemeffect%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::ItemEffect] = pItemEffectImage;
-
-	CImage* pDeathEffectImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 5);
-	pDeathEffectImage->ManualLoadImage(hWnd, L"Images\\Effect\\death%02d.png");
-	m_listImages[E_SUNNYLAND_IMAGE::DeathEffect] = pDeathEffectImage;
-}
-
-void CGameScene::Initialize(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
-{
-	ID2D1HwndRenderTarget* pRenderTarget = CSingletonRenderTarget::GetRenderTarget();
-
-	m_pColorBrushPalettet = new CColorBrushPalettet();
-	m_pColorBrushPalettet->Initialize(pRenderTarget);
-
-	CImage* pPlayerImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 6);
-	pPlayerImage->ManualLoadImage(hWnd, L"Images\\Player\\player%02d.png");
-	m_listImages.push_back(pPlayerImage);
-	//_InitImagesList(hWnd,pDX2DFramework);
-
-	m_pPlayerObject = new CGameObject();
-	m_pPlayerObject->Initialize(m_listImages[E_SUNNYLAND_IMAGE::Player], true);
-	SRect sPlayerRect = m_pPlayerObject->GetImage()->GetDrawRect();
-	m_pPlayerCollider = new CCircleCollider(m_pPlayerObject->GetTransformPtr(), sPlayerRect.GetCenter(), sPlayerRect.GetRadius());
-	m_pPlayerObject->SetCollider(m_pPlayerCollider);
-
-	//int nSize = 10;
-	////m_listItem.resize(nSize);
-
-	//for (int i = 0; i < nSize; i++)
-	//{
-	//	CGameObject* pObjectItem = new CGameObject();
-	//	pObjectItem->Initialize(m_listImages[E_SUNNYLAND_IMAGE::Cherry], true);
-	//	pObjectItem->GetTransform().SetTransrate(100.0f * i, 100.0f);
-	//	m_listEnableItem.push_back(pObjectItem);
-	//	m_listItem.push_back(pObjectItem);
-	//}
-
-	//m_pRigidBody = new CRigidbody();
-}
-
-void CGameScene::Release()
-{
-	//delete m_pRigidBody;
-
-	//m_pRigidBodyObject->Release();
-	//delete m_pRigidBodyObject;
-	
-	for(auto it = m_listImages.begin(); 
-		it != m_listImages.end(); it++)
-	{
-		delete *it;
-	}
-	m_listImages.clear();
-
-	for (auto it = m_listItem.begin();
-		it != m_listItem.end(); it++)
-	{
-		delete *it;
-	}
-	m_listItem.clear();
-
-	delete m_pPlayerCollider;
-	m_pPlayerObject->Release();
-	delete m_pPlayerObject;
-
-	m_pColorBrushPalettet->Release();
-	delete m_pColorBrushPalettet;
+	m_pPlayer->Initialize(
+		m_hWnd,
+		m_pDX2DFramework
+	);
 }
 
 void CGameScene::Update()
 {
-	static float fAngle = 0;
+	// Player Update
+	if (m_pPlayer)
 	{
-		CTransform& refTrnasform = m_pPlayerObject->GetTransform();
-		SVector2 vPos = refTrnasform.GetTransrate();
-		SVector2 vSize = m_pPlayerObject->GetImage()->GetImageSize();
-		SVector2 vAsix = vSize * 0.5f;
-		SVector2 vScale = refTrnasform.GetScale();
+		m_pPlayer->Update();
 
-		//벡터방식 연산보다는 효률적이다.
-		if (CInputManager::GetAsyncKeyStatePress(VK_RIGHT))
-			refTrnasform.Transrate(SVector2::right() * m_fPlayerSpeed);//vPlayerPos.x -= fPlayerSpeed;
-		if (CInputManager::GetAsyncKeyStatePress(VK_LEFT))
-			refTrnasform.Transrate(SVector2::left() * m_fPlayerSpeed);//vPlayerPos.x -= fPlayerSpeed;
-		if (CInputManager::GetAsyncKeyStatePress(VK_DOWN))
-			refTrnasform.Transrate(SVector2::down() * m_fPlayerSpeed);//vPlayerPos.x -= fPlayerSpeed;
-		if (CInputManager::GetAsyncKeyStatePress(VK_UP))
-			refTrnasform.Transrate(SVector2::up() * m_fPlayerSpeed);//vPlayerPos.x -= fPlayerSpeed;
-		if (CInputManager::GetAsyncKeyStatePress(90))
-			refTrnasform.Transrate(SVector2::left() * m_fPlayerSpeed);//vPlayerPos.x -= fPlayerSpeed;
-
-		refTrnasform.SetAsixPoint(vAsix);
-		refTrnasform.Rotate(10);
-	}
-	m_pPlayerObject->Update();
-
-	SVector2 vPlayerPos = m_pPlayerObject->GetTransform().GetTransrate();
-	SVector2 vPlayerSize = m_pPlayerObject->GetImage()->GetImageSize() * 0.5f;
-	SVector2 vPlayerCenterPos = vPlayerPos + vPlayerSize;
-	float fPlayerRad = vPlayerSize.Magnitude();
-
-	for (auto it = m_listItem.begin();
-		it != m_listItem.end(); it++)
-	{
-		CGameObject* pObjItem = (*it);
-
-		if (pObjItem->GetActive())
+		// 발사 요청 확인
+		if (m_pPlayer->IsFireRequested())
 		{
-			SVector2 vItemPos = pObjItem->GetTransform().GetTransrate();
-			SVector2 vItemSize = pObjItem->GetImage()->GetImageSize();
-			SVector2 vItemCenterPos = vItemPos + vItemSize * 0.5f;
-			float fItemRad = vItemSize.Magnitude();
+			SVector2 bulletPosition =
+				m_pPlayer->GetTransform().GetTransrate();
 
-			if (CCollisionCheck::OverlapCircleToCircle(vPlayerCenterPos, fPlayerRad, vItemCenterPos, fItemRad))
-			{
-				CDebugHelper::LogConsole("[%x] PlayerPos[%f](%f,%f) ItemPos[%f](%f,%f)\n", pObjItem, fPlayerRad, vPlayerPos.x, vPlayerPos.y, fItemRad, vItemPos.x, vItemPos.y);
-				CGameObject* colItem = *it;
-				auto itFind = find(m_listEnableItem.begin(), m_listEnableItem.end(), colItem);
-				colItem->SetActive(false);
-				m_listDiableItem.push(colItem);
-				m_listEnableItem.remove(colItem);
-			}
+			// 플레이어의 앞쪽에서 생성
+			bulletPosition.x += 30.0f;
+
+			CBullet* pBullet = new CBullet();
+
+			pBullet->Initialize(
+				m_hWnd,
+				m_pDX2DFramework,
+				bulletPosition
+			);
+
+			m_bullets.push_back(pBullet);
+
+			// 발사 요청 처리 완료
+			m_pPlayer->ResetFireRequest();
 		}
-		pObjItem->Update();
+	}
+
+	// Bullet Update
+	for (CBullet* bullet : m_bullets)
+	{
+		if (bullet->GetActive())
+		{
+			bullet->Update();
+		}
 	}
 }
 
 void CGameScene::Draw()
 {
-	m_pPlayerObject->Draw();
-	CDebugHelper::DrawRect(m_pPlayerObject, m_pColorBrushPalettet->GetBrushClass(CColorBrushPalettet::BLACK));
-	CDebugHelper::DrawCircle(m_pPlayerObject, m_pColorBrushPalettet->GetBrushClass(CColorBrushPalettet::RED));
-	for (auto it = m_listItem.begin();
-		it != m_listItem.end(); it++)
+	// Player Draw
+	if (m_pPlayer)
 	{
-		CGameObject* pItem = (*it);
-		pItem->Draw();
-		CDebugHelper::DrawCircle(pItem, m_pColorBrushPalettet->GetBrushClass(CColorBrushPalettet::RED));
+		m_pPlayer->Draw();
+	}
+
+	// Bullet Draw
+	for (CBullet* bullet : m_bullets)
+	{
+		if (bullet->GetActive())
+		{
+			bullet->Draw();
+		}
+	}
+}
+
+void CGameScene::Release()
+{
+	// Bullet 해제
+	for (CBullet* bullet : m_bullets)
+	{
+		if (bullet)
+		{
+			bullet->Release();
+			delete bullet;
+		}
+	}
+
+	m_bullets.clear();
+
+	// Player 해제
+	if (m_pPlayer)
+	{
+		m_pPlayer->Release();
+
+		delete m_pPlayer;
+		m_pPlayer = nullptr;
 	}
 }
