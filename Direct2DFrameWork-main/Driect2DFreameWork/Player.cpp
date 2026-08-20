@@ -2,11 +2,12 @@
 
 #include "DX2DClasses/Image.h"
 #include "DX2DClasses/InputManager.h"
+#include "DX2DClasses/Time.h"
 
 namespace DX2DClasses
 {
 	CPlayer::CPlayer()
-		: m_fMoveSpeed(3.0f)
+		: m_fMoveSpeed(10.0f)
 		, m_bFireRequested(false)
 		, m_bPrevSpacePressed(false)
 	{
@@ -47,6 +48,17 @@ namespace DX2DClasses
 			100.0f,
 			200.0f
 		);
+
+		SVector2 imageSize = pPlayerImage->GetImageSize();
+
+		m_collider.InitCollider(
+			&GetTransform(),
+			SVector2(
+				imageSize.x / 2.0f, imageSize.y / 2.0f
+			),
+			imageSize,
+			0.25f
+		);
 	}
 
 	void CPlayer::Update()
@@ -60,28 +72,28 @@ namespace DX2DClasses
 		if (CInputManager::GetAsyncKeyStatePress(VK_RIGHT))
 		{
 			transform.Transrate(
-				SVector2(3.0f, 0.0f)
+				SVector2(m_fMoveSpeed, 0.0f)
 			);
 		}
 
 		if (CInputManager::GetAsyncKeyStatePress(VK_LEFT))
 		{
 			transform.Transrate(
-				SVector2(-3.0f, 0.0f)
+				SVector2(-m_fMoveSpeed, 0.0f)
 			);
 		}
 
 		if (CInputManager::GetAsyncKeyStatePress(VK_UP))
 		{
 			transform.Transrate(
-				SVector2(0.0f, -3.0f)
+				SVector2(0.0f, -m_fMoveSpeed)
 			);
 		}
 
 		if (CInputManager::GetAsyncKeyStatePress(VK_DOWN))
 		{
 			transform.Transrate(
-				SVector2(0.0f, 3.0f)
+				SVector2(0.0f, m_fMoveSpeed)
 			);
 		}
 
@@ -112,5 +124,10 @@ namespace DX2DClasses
 	void CPlayer::ResetFireRequest()
 	{
 		m_bFireRequested = false;
+	}
+
+	CCircleCollider* CPlayer::GetCollider()
+	{
+		return &m_collider;
 	}
 }

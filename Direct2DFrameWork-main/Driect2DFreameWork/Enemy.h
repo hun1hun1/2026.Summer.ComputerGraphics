@@ -6,16 +6,16 @@
 
 namespace DX2DClasses
 {
-	class CBullet : public CGameObject
+	class CEnemy : public CGameObject
 	{
 	private:
-		float m_fSpeed;
+		float m_fMoveSpeed;
 
 		CCircleCollider m_collider;
 
 	public:
-		CBullet();
-		~CBullet();
+		CEnemy();
+		virtual ~CEnemy();
 
 		void Initialize(
 			HWND hWnd,
@@ -23,7 +23,7 @@ namespace DX2DClasses
 			const SVector2& position
 		);
 
-		void Update() override;
+		void Update(const SVector2& playerPosition);
 
 		CCircleCollider* GetCollider();
 	};

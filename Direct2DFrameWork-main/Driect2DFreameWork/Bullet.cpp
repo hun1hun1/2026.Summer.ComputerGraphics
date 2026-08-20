@@ -41,6 +41,27 @@ namespace DX2DClasses
 		// 플레이어가 바라보는 방향에 맞춰
 		// 오른쪽으로 약간 떨어진 위치에서 생성
 		GetTransform().SetTransrate(position);
+
+		// 총알 이미지 크기
+		SVector2 imageSize =
+			pBulletImage->GetImageSize();
+
+		// Circle Collider
+		m_collider.InitCollider(
+			&GetTransform(),
+
+			// 이미지 중심
+			SVector2(
+				imageSize.x / 2.0f,
+				imageSize.y / 2.0f
+			),
+
+			// 이미지 크기
+			imageSize,
+
+			// Collider 크기 비율
+			0.3f
+		);
 	}
 
 	void CBullet::Update()
@@ -59,5 +80,10 @@ namespace DX2DClasses
 		}
 
 		CGameObject::Update();
+	}
+
+	CCircleCollider* CBullet::GetCollider()
+	{
+		return &m_collider;
 	}
 }

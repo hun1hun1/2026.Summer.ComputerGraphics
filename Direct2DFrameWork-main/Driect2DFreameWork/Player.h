@@ -2,6 +2,7 @@
 
 #include "DX2DClasses/GameObject.h"
 #include "DX2DClasses/Driect2DFramework.h"
+#include "DX2DClasses/Colliders.h"
 
 namespace DX2DClasses
 {
@@ -11,6 +12,9 @@ namespace DX2DClasses
 		float m_fMoveSpeed = 3.0f;
 		bool m_bFireRequested;
 		bool m_bPrevSpacePressed;
+
+		CCircleCollider m_collider;
+
 
 	public:
 		CPlayer();
@@ -25,5 +29,7 @@ namespace DX2DClasses
 
 		bool IsFireRequested() const;
 		void ResetFireRequest();
+
+		CCircleCollider* GetCollider();
 	};
 }

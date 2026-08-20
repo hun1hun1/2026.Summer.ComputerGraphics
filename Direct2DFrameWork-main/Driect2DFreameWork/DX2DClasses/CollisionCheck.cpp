@@ -894,7 +894,7 @@ bool CCollisionCheck::OverlapOBBtoOBB(SVector2 vTL_A, SVector2 vTR_A, SVector2 v
 		//CDebugHelper::DrawLine(vBoxA, vNormalEnd, pBlackBrush);
 #endif
 		//각 모든선분에 1개라도 일치하지않는 경우 충돌하지않는것으로 간주한다.
-		if (!overlaps(boxAMin, boxBMax, boxAMin, boxBMax))
+		if (!overlaps(boxAMin, boxAMax, boxBMin, boxBMax))
 		{
 			return false; // NO INTERSECTION
 		}

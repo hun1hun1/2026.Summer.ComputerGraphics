@@ -117,7 +117,7 @@ CBoxCollider::CBoxCollider(SVector2 tl, SVector2 br)
 	m_vTopLeft = tl;
 	m_vBottomRigth = br;
 	m_vTopRight = SVector2(m_vTopLeft.x, m_vBottomRigth.y);
-	m_vBottomRigth = SVector2(m_vBottomRigth.x, m_vTopLeft.y);
+	m_vBottomLeft = SVector2(m_vBottomRigth.x, m_vTopLeft.y);
 }
 
 void CBoxCollider::InitCollider(CTransform* pTransform, SVector2 pos, SVector2 size, float scale)
