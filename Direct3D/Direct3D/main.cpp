@@ -7,6 +7,7 @@
  *------------------------------------------------------------------------------
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 #define MAINBODY
 
 #include <d3d9.h>

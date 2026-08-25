@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <list>
 #include <vector>
@@ -60,7 +61,7 @@ void WriteFileText(int width, int hight)
 void ReadFileText()
 {
 	int nSellWidth;
-	int nSellHighit;
+	int nSellHighit = 0;
 	vector<vector<vector<TexCoords>>> arrTextureCoords(nSellHighit);
 	FILE* pFile = fopen("texCoords.txt", "rt");
 	fscanf(pFile, "%d %d\n", &nSellWidth, &nSellHighit);
